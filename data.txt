@@ -1,0 +1,4 @@
+roti,12,Makanan
+palu,99,Perkakas
+ramen,88,Makanan
+burger,13,Makanan
