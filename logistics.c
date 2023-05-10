@@ -252,7 +252,7 @@ void swap_nodes(Node **head_ref, Node *node1, Node *node2)
 
 void sort_by_name(Node **head_ref, int order)
 {
-    int swapped, i;
+    int swapped;
     Node *node1;
     Node *node2 = NULL;
 
@@ -284,7 +284,7 @@ void sort_by_name(Node **head_ref, int order)
 
 void sort_by_category(Node **head_ref, int order)
 {
-    int swapped, i;
+    int swapped;
     Node *node1;
     Node *node2 = NULL;
 
@@ -316,7 +316,7 @@ void sort_by_category(Node **head_ref, int order)
 
 void sort_by_quantity(Node **head_ref, int order)
 {
-    int swapped, i;
+    int swapped;
     Node *node1;
     Node *node2 = NULL;
 
