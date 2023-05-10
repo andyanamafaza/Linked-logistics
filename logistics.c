@@ -357,8 +357,8 @@ int main()
     while (1)
     {
         printf("\n===== INVENTORY MANAGEMENT =====\n");
-        printf("1. Add new product\n");
-        printf("2. Add new categories\n");
+        printf("1. Add new categories\n");
+        printf("2. Add new product\n");
         printf("3. Change product quantity\n");
         printf("4. Delete product\n");
         printf("5. Delete categories\n");
@@ -372,312 +372,312 @@ int main()
         printf("\n");
         switch (choice)
         {
-        case 1:
-        {
-            system("cls");
-            Product product = {0};
-            int input, categories_input;
-            printf("Add new product in the head of the linked list or tail?\n");
-            printf("1. Head\n");
-            printf("2. Tail\n");
-            scanf("%d", &input);
+            case 1:
+            {
+                system("cls");
+                char temp[MAX];
+                printf("Enter new category: ");
+                scanf("%49s", temp);
+                strcpy(categories[size], temp);
+                size++;
+                save_categories(categories, size);
+                printf("Category added successfully\n");
+                break;
+            }
+            case 2:
+            {
+                system("cls");
+                Product product = {0};
+                int input, categories_input;
+                printf("Add new product in the head of the linked list or tail?\n");
+                printf("1. Head\n");
+                printf("2. Tail\n");
+                scanf("%d", &input);
 
-            if (input == 1)
-            {
-                printf("Enter name: ");
-                scanf("%49s", product.name);
-                printf("Enter quantity: ");
-                scanf("%d", &product.quantity);
-                printf("Choose product category:\n");
-                for (int i = 0; i < size; i++)
+                if (input == 1)
                 {
-                    printf("%d. %s\n", i + 1, categories[i]);
+                    printf("Enter name: ");
+                    scanf("%49s", product.name);
+                    printf("Enter quantity: ");
+                    scanf("%d", &product.quantity);
+                    printf("Choose product category:\n");
+                    for (int i = 0; i < size; i++)
+                    {
+                        printf("%d. %s\n", i + 1, categories[i]);
+                    }
+                    scanf("%d", &categories_input);
+                    strcpy(product.category, categories[categories_input - 1]);
+                    insert_head(&head, product);
+                    save_data(head);
+                    printf("Product added at the head successfully\n");
                 }
-                scanf("%d", &categories_input);
-                strcpy(product.category, categories[categories_input - 1]);
-                insert_head(&head, product);
-                save_data(head);
-                printf("Product added at the head successfully\n");
-            }
-            else if (input == 2)
-            {
-                printf("Enter name: ");
-                scanf("%49s", product.name);
-                printf("Enter quantity: ");
-                scanf("%d", &product.quantity);
-                printf("Choose product category:\n");
-                for (int i = 0; i < size; i++)
+                else if (input == 2)
                 {
-                    printf("%d. %s\n", i + 1, categories[i]);
+                    printf("Enter name: ");
+                    scanf("%49s", product.name);
+                    printf("Enter quantity: ");
+                    scanf("%d", &product.quantity);
+                    printf("Choose product category:\n");
+                    for (int i = 0; i < size; i++)
+                    {
+                        printf("%d. %s\n", i + 1, categories[i]);
+                    }
+                    scanf("%d", &categories_input);
+                    strcpy(product.category, categories[categories_input - 1]);
+                    insert_tail(&head, product);
+                    save_data(head);
+                    printf("Product added at the tail successfully\n");
                 }
-                scanf("%d", &categories_input);
-                strcpy(product.category, categories[categories_input - 1]);
-                insert_tail(&head, product);
-                save_data(head);
-                printf("Product added at the tail successfully\n");
+                else
+                {
+                    printf("Invalid input\n");
+                }
+                break;
             }
-            else
+            case 3:
             {
-                printf("Invalid input\n");
+                system("cls");
+                printf("Increase or decrease quantity?\n");
+                printf("1. Increase\n");
+                printf("2. Decrease\n");
+                int input;
+                scanf("%d", &input);
+                if (input == 1)
+                {
+                    char name[MAX];
+                    printf("Enter product name: ");
+                    scanf("%s", name);
+                    Node *node = search_by_name(head, name);
+                    if (node != NULL)
+                    {
+                        int amount;
+                        printf("Enter amount to increase: ");
+                        scanf("%d", &amount);
+                        increase_quantity(node, amount);
+                        save_data(head);
+                        printf("Quantity increased successfully\n");
+                    }
+                    else
+                    {
+                        printf("Product not found\n");
+                    }
+                }
+                else if (input == 2)
+                {
+                    char name[MAX];
+                    printf("Enter product name: ");
+                    scanf("%s", name);
+                    Node *node = search_by_name(head, name);
+                    if (node != NULL)
+                    {
+                        int amount;
+                        printf("Enter amount to decrease: ");
+                        scanf("%d", &amount);
+                        decrease_quantity(node, amount);
+                        save_data(head);
+                        printf("Quantity decreased successfully\n");
+                    }
+                    else
+                    {
+                        printf("Product not found\n");
+                    }
+                }
+                else
+                {
+                    printf("Invalid input\n");
+                }
+                break;
             }
-            break;
-        }
-        case 2:
-        {
-            system("cls");
-            char temp[MAX];
-            printf("Enter new category: ");
-            scanf("%49s", temp);
-            strcpy(categories[size], temp);
-            size++;
-            save_categories(categories, size);
-            printf("Category added successfully\n");
-            break;
-        }
-        case 3:
-        {
-            system("cls");
-            printf("Increase or decrease quantity?\n");
-            printf("1. Increase\n");
-            printf("2. Decrease\n");
-            int input;
-            scanf("%d", &input);
-            if (input == 1)
+            case 4:
             {
+                system("cls");
                 char name[MAX];
                 printf("Enter product name: ");
                 scanf("%s", name);
                 Node *node = search_by_name(head, name);
                 if (node != NULL)
                 {
-                    int amount;
-                    printf("Enter amount to increase: ");
-                    scanf("%d", &amount);
-                    increase_quantity(node, amount);
+                    delete_node(&head, node);
                     save_data(head);
-                    printf("Quantity increased successfully\n");
+                    printf("Product deleted successfully\n");
                 }
                 else
                 {
                     printf("Product not found\n");
                 }
+                break;
             }
-            else if (input == 2)
+            case 5:
             {
-                char name[MAX];
-                printf("Enter product name: ");
-                scanf("%s", name);
-                Node *node = search_by_name(head, name);
-                if (node != NULL)
-                {
-                    int amount;
-                    printf("Enter amount to decrease: ");
-                    scanf("%d", &amount);
-                    decrease_quantity(node, amount);
-                    save_data(head);
-                    printf("Quantity decreased successfully\n");
-                }
-                else
-                {
-                    printf("Product not found\n");
-                }
-            }
-            else
-            {
-                printf("Invalid input\n");
-            }
-            break;
-        }
-        case 4:
-        {
-            system("cls");
-            char name[MAX];
-            printf("Enter product name: ");
-            scanf("%s", name);
-            Node *node = search_by_name(head, name);
-            if (node != NULL)
-            {
-                delete_node(&head, node);
-                save_data(head);
-                printf("Product deleted successfully\n");
-            }
-            else
-            {
-                printf("Product not found\n");
-            }
-            break;
-        }
-        case 5:
-        {
-            system("cls");
-            printf("Choose category to delete:\n");
-            for (int i = 0; i < size; i++)
-            {
-                printf("%d. %s\n", i + 1, categories[i]);
-            }
-            int input;
-            scanf("%d", &input);
-            delete_category(categories, &size, input - 1);
-            save_categories(categories, size);
-            break;
-        }
-        case 6:
-        {
-            system("cls");
-            char temp[MAX];
-            printf("Search product by name or category?\n");
-            printf("1. Name\n");
-            printf("2. Category\n");
-            int input;
-            scanf("%d", &input);
-            if (input == 1)
-            {
-                printf("Enter name: ");
-                scanf("%s", temp);
-                Node *node = search_by_name(head, temp);
-                if (node != NULL)
-                {
-                    printf("\n=== SEARCH RESULTS ===\n");
-                    printf("%-20s %-10s %-10s\n", "Name", "Quantity", "Category");
-                    printf("%-20s %-10d %-10s\n", node->product.name, node->product.quantity, node->product.category);
-                }
-                else
-                {
-                    printf("Product not found\n");
-                }
-            }
-            else if (input == 2)
-            {
-                printf("Choose category to search:\n");
+                system("cls");
+                printf("Choose category to delete:\n");
                 for (int i = 0; i < size; i++)
                 {
                     printf("%d. %s\n", i + 1, categories[i]);
                 }
                 int input;
                 scanf("%d", &input);
-                Node *node = search_by_categories(head, categories[input - 1]);
-                printf("\n=== SEARCH RESULTS ===\n");
-                if (node == NULL)
-                {
-                    printf("Product with category %s not found\n", temp);
-                }
-                else
-                {
-                    printf("%-20s %-10s %-10s\n", "Name", "Quantity", "Category");
-                }
-                while (node != NULL)
-                {
-                    printf("%-20s %-10d %-10s\n", node->product.name, node->product.quantity, node->product.category);
-                    node = search_by_categories(node->next, categories[input - 1]);
-                }
+                delete_category(categories, &size, input - 1);
+                save_categories(categories, size);
+                break;
             }
-            else
+            case 6:
             {
-                printf("Invalid input\n");
-            }
-            break;
-        }
-        case 7:
-        {
-            system("cls");
-            printf("Sort product by name, category, or quantity?\n");
-            printf("1. Name\n");
-            printf("2. Category\n");
-            printf("3. Quantity\n");
-            int input, input2;
-            scanf("%d", &input);
-            if (input == 1)
-            {
-                printf("Ascending or descending?\n");
-                printf("1. Ascending\n");
-                printf("2. Descending\n");
-                scanf("%d", &input2);
-                if (input2 == 1)
+                system("cls");
+                char temp[MAX];
+                printf("Search product by name or category?\n");
+                printf("1. Name\n");
+                printf("2. Category\n");
+                int input;
+                scanf("%d", &input);
+                if (input == 1)
                 {
-                    sort_by_name(&head, 1);
-                    save_data(head);
-                    printf("Sorted by name in ascending order\n");
+                    printf("Enter name: ");
+                    scanf("%s", temp);
+                    Node *node = search_by_name(head, temp);
+                    if (node != NULL)
+                    {
+                        printf("\n=== SEARCH RESULTS ===\n");
+                        printf("%-20s %-10s %-10s\n", "Name", "Quantity", "Category");
+                        printf("%-20s %-10d %-10s\n", node->product.name, node->product.quantity, node->product.category);
+                    }
+                    else
+                    {
+                        printf("Product not found\n");
+                    }
                 }
-                else if (input2 == 2)
+                else if (input == 2)
                 {
-                    sort_by_name(&head, -1);
-                    save_data(head);
-                    printf("Sorted by name in descending order\n");
-                }
-                else
-                {
-                    printf("Invalid input\n");
-                }
-            }
-            else if (input == 2)
-            {
-                printf("Ascending or descending?\n");
-                printf("1. Ascending\n");
-                printf("2. Descending\n");
-                scanf("%d", &input2);
-                if (input2 == 1)
-                {
-                    sort_by_category(&head, 1);
-                    save_data(head);
-                    printf("Sorted by category in ascending order\n");
-                }
-                else if (input2 == 2)
-                {
-                    sort_by_category(&head, -1);
-                    save_data(head);
-                    printf("Sorted by category in descending order\n");
+                    printf("Choose category to search:\n");
+                    for (int i = 0; i < size; i++)
+                    {
+                        printf("%d. %s\n", i + 1, categories[i]);
+                    }
+                    int input;
+                    scanf("%d", &input);
+                    Node *node = search_by_categories(head, categories[input - 1]);
+                    printf("\n=== SEARCH RESULTS ===\n");
+                    if (node == NULL)
+                    {
+                        printf("Product with category %s not found\n", temp);
+                    }
+                    else
+                    {
+                        printf("%-20s %-10s %-10s\n", "Name", "Quantity", "Category");
+                    }
+                    while (node != NULL)
+                    {
+                        printf("%-20s %-10d %-10s\n", node->product.name, node->product.quantity, node->product.category);
+                        node = search_by_categories(node->next, categories[input - 1]);
+                    }
                 }
                 else
                 {
                     printf("Invalid input\n");
                 }
+                break;
             }
-            else if (input == 3)
+            case 7:
             {
-                printf("Ascending or descending?\n");
-                printf("1. Ascending\n");
-                printf("2. Descending\n");
-                scanf("%d", &input2);
-                if (input2 == 1)
+                system("cls");
+                printf("Sort product by name, category, or quantity?\n");
+                printf("1. Name\n");
+                printf("2. Category\n");
+                printf("3. Quantity\n");
+                int input, input2;
+                scanf("%d", &input);
+                if (input == 1)
                 {
-                    sort_by_quantity(&head, 1);
-                    save_data(head);
-                    printf("Sorted by quantity in ascending order\n");
+                    printf("Ascending or descending?\n");
+                    printf("1. Ascending\n");
+                    printf("2. Descending\n");
+                    scanf("%d", &input2);
+                    if (input2 == 1)
+                    {
+                        sort_by_name(&head, 1);
+                        save_data(head);
+                        printf("Sorted by name in ascending order\n");
+                    }
+                    else if (input2 == 2)
+                    {
+                        sort_by_name(&head, -1);
+                        save_data(head);
+                        printf("Sorted by name in descending order\n");
+                    }
+                    else
+                    {
+                        printf("Invalid input\n");
+                    }
                 }
-                else if (input2 == 2)
+                else if (input == 2)
                 {
-                    sort_by_quantity(&head, -1);
-                    save_data(head);
-                    printf("Sorted by quantity in descending order\n");
+                    printf("Ascending or descending?\n");
+                    printf("1. Ascending\n");
+                    printf("2. Descending\n");
+                    scanf("%d", &input2);
+                    if (input2 == 1)
+                    {
+                        sort_by_category(&head, 1);
+                        save_data(head);
+                        printf("Sorted by category in ascending order\n");
+                    }
+                    else if (input2 == 2)
+                    {
+                        sort_by_category(&head, -1);
+                        save_data(head);
+                        printf("Sorted by category in descending order\n");
+                    }
+                    else
+                    {
+                        printf("Invalid input\n");
+                    }
+                }
+                else if (input == 3)
+                {
+                    printf("Ascending or descending?\n");
+                    printf("1. Ascending\n");
+                    printf("2. Descending\n");
+                    scanf("%d", &input2);
+                    if (input2 == 1)
+                    {
+                        sort_by_quantity(&head, 1);
+                        save_data(head);
+                        printf("Sorted by quantity in ascending order\n");
+                    }
+                    else if (input2 == 2)
+                    {
+                        sort_by_quantity(&head, -1);
+                        save_data(head);
+                        printf("Sorted by quantity in descending order\n");
+                    }
+                    else
+                    {
+                        printf("Invalid input\n");
+                    }
                 }
                 else
                 {
                     printf("Invalid input\n");
                 }
+                break;
             }
-            else
+            case 8:
             {
-                printf("Invalid input\n");
+                system("cls");
+                printf("\n=============== ALL PRODUCTS ===============\n");
+                print_list(head);
+                break;
             }
-            break;
-        }
-        case 8:
-        {
-            system("cls");
-            printf("\n=============== ALL PRODUCTS ===============\n");
-            print_list(head);
-            break;
-        }
-        case 9:
-        {
-            save_categories(categories, size);
-            save_data(head);
-            exit(0);
-        }
-        default:
-        {
-            printf("Invalid choice\n");
-        }
+            case 9:
+            {
+                save_categories(categories, size);
+                save_data(head);
+                exit(0);
+            }
+            default:
+            {
+                printf("Invalid choice\n");
+            }
         }
     }
     return 0;
