@@ -1,5 +1,11 @@
 # Linked-logistics
 Linked-logistics merupakan proyek struktur data sederhana menggunakan bahasa pemrograman C untuk memanajemen logistik menggunakan struktur data array dan double linked list.
+### Anggota Kelompok
+| No | Nama  | NIM |
+| :---: | :----: | :----------: |
+| 1 | Andyana Lilmuttaqina Mafaza | G6401211002 |
+| 2 | Adrian Muhammad Abimanyu | G6401211004 |
+| 3 | Muhammad Ariiq Arrafi | G6401211062 |
 ### Cara Menjalankan Program
 1. Clone repositori ini ke komputer lokal Anda
 2. Buka file logistics.c pada teks editor
