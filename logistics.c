@@ -315,8 +315,14 @@ int main()
                 if (type == 1 || type == 2 || type == 3)
                 {
                     valid2 = 1;
-                    merge_sort(&head, order, type);
-                    printf("Products sorted successfully!\n");
+                    if(order == 1){
+                        merge_sort(&head, 1, type);
+                        printf("Products sorted successfully!\n");
+                    }
+                    else{
+                        merge_sort(&head, -1, type);
+                        printf("Products sorted successfully!\n");
+                    }
                 }
                 else
                 {
