@@ -18,9 +18,10 @@ int main()
     HashTable hashTable[HASH_SIZE];
     initialize(hashTable);
 
-    load_data(&head, &tail);
+    system("cls");
     load_categories(hashTable);
-
+    printf("Loading data...\n");
+    load_data(&head, &tail);
     int choice;
     do
     {
@@ -71,6 +72,14 @@ int main()
                 printf("2. End\n");
                 printf("Enter your choice: ");
                 scanf("%d", &place);
+                if (scanf("%d", &place) != 1)
+                {
+                    printf("Invalid input! Please enter a number.\n");
+                    while (getchar() != '\n')
+                    {
+                    }
+                    continue;
+                }
                 if (place == 1 || place == 2)
                 {
                     valid1 = 1;
@@ -82,6 +91,11 @@ int main()
             } while (valid1 == 0);
             printf("Enter product name: ");
             scanf(" %49[^\n]", product.name);
+            if (search_by_name(head, tail, product.name) != NULL)
+            {
+                printf("Product already exists!\n");
+                break;
+            }
             printf("Enter product quantity: ");
             scanf("%d", &product.quantity);
             do
@@ -125,6 +139,14 @@ int main()
                 printf("2. Decrease\n");
                 printf("Enter your choice: ");
                 scanf("%d", &type);
+                if (scanf("%d", &type) != 1)
+                {
+                    printf("Invalid input! Please enter a number.\n");
+                    while (getchar() != '\n')
+                    {
+                    }
+                    continue;
+                }
                 if (type == 1 || type == 2)
                 {
                     valid = 1;
@@ -138,7 +160,7 @@ int main()
             {
                 printf("Enter product name: ");
                 scanf(" %49[^\n]", name);
-                Node *node = search_by_name(head, name);
+                Node *node = search_by_name(head, tail, name);
                 if (node != NULL)
                 {
                     switch (type)
@@ -171,7 +193,7 @@ int main()
             char name[MAX];
             printf("Enter product name to delete: ");
             scanf(" %49[^\n]", name);
-            Node *node = search_by_name(head, name);
+            Node *node = search_by_name(head, tail, name);
             if (node != NULL)
             {
                 delete_node(&head, node);
@@ -189,14 +211,29 @@ int main()
             char category[MAX];
             printf("Enter category name to delete: ");
             scanf(" %49[^\n]", category);
-            if (search_category(hashTable, category) == NULL)
+            if (search_category(hashTable, category) != NULL)
             {
-                printf("Category not found!\n");
-                break;
+                delete_category(hashTable, category);
+                Node *node1 = head;
+                Node *node2 = tail;
+                while (node1 != NULL && node2 != NULL && node1 != node2->next)
+                {
+                    if (strcmp(node1->product.category, category) == 0)
+                    {
+                        delete_node(&head, node1);
+                    }
+                    if (strcmp(node2->product.category, category) == 0)
+                    {
+                        delete_node(&tail, node2);
+                    }
+                    node1 = node1->next;
+                    node2 = node2->prev;
+                }
+                printf("Category deleted successfully!\n");
             }
             else
             {
-                delete_category(hashTable, category);
+                printf("Category not found!\n");
             }
             break;
         }
@@ -204,19 +241,58 @@ int main()
         {
             system("cls");
             char name[MAX];
-            printf("Enter product name to search: ");
-            scanf(" %[^\n]s", name);
-            Node *node = search_by_name(head, name);
-            if (node != NULL)
+            int valid = 0;
+            int input;
+            do
             {
-                printf("Product found!\n");
-                printf("Name: %s\n", node->product.name);
-                printf("Quantity: %d\n", node->product.quantity);
-                printf("Category: %s\n", node->product.category);
+                printf("Search by name or category\n");
+                printf("1. Name\n");
+                printf("2. Category\n");
+                printf("Enter your choice: ");
+                scanf("%d", &input);
+                if (scanf("%d", &input) != 1)
+                {
+                    printf("Invalid input! Please enter a number.\n");
+                    while (getchar() != '\n')
+                    {
+                    }
+                    continue;
+                }
+                if (input == 1 || input == 2)
+                {
+                    valid = 1;
+                }
+                else
+                {
+                    printf("Invalid choice!\n");
+                }
+            } while (valid == 0);
+            switch (input)
+            {
+            case 1:
+            {
+                printf("Enter product name to search: ");
+                scanf(" %49[^\n]", name);
+                Node *node = search_by_name(head, tail, name);
+                if (node != NULL)
+                {
+                    printf("Product found!\n");
+                    printf("Name: %s\n", node->product.name);
+                    printf("Quantity: %d\n", node->product.quantity);
+                    printf("Category: %s\n", node->product.category);
+                }
+                else
+                {
+                    printf("Product not found!\n");
+                }
+                break;
             }
-            else
+            case 2:
             {
-                printf("Product not found!\n");
+                printf("Enter category name to search: ");
+                scanf(" %49[^\n]", name);
+                search_by_categories(head, name);
+            }
             }
             break;
         }
@@ -233,6 +309,14 @@ int main()
                 printf("2. Descending\n");
                 printf("Enter your choice: ");
                 scanf("%d", &order);
+                if (scanf("%d", &order) != 1)
+                {
+                    printf("Invalid input! Please enter a number.\n");
+                    while (getchar() != '\n')
+                    {
+                    }
+                    continue;
+                }
                 if (order == 1 || order == 2)
                 {
                     valid1 = 1;
@@ -250,6 +334,14 @@ int main()
                 printf("3. Quantity\n");
                 printf("Enter your choice: ");
                 scanf("%d", &type);
+                if (scanf("%d", &type) != 1)
+                {
+                    printf("Invalid input! Please enter a number.\n");
+                    while (getchar() != '\n')
+                    {
+                    }
+                    continue;
+                }
                 if (type == 1 || type == 2 || type == 3)
                 {
                     valid2 = 1;
