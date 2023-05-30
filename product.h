@@ -69,26 +69,35 @@ void print_list(Node *head)
     }
 }
 
-Node *search_by_name(Node *head, char *name)
+Node *search_by_name(Node *head, Node *tail, char *name)
 {
-    while (head != NULL)
+    while (head != NULL && tail != NULL && head != tail->next)
     {
         if (strcmp(head->product.name, name) == 0)
         {
             return head;
         }
+        if (strcmp(tail->product.name, name) == 0)
+        {
+            return tail;
+        }
         head = head->next;
+        tail = tail->prev;
     }
     return NULL;
 }
 
 Node *search_by_categories(Node *head, char *category)
 {
+    int no = 1;
+    printf("List of products in category %s\n", category);
+    printf("%-2s %-20s %-10s %-10s\n", "No", "Name", "Quantity", "Category");
     while (head != NULL)
     {
         if (strcmp(head->product.category, category) == 0)
         {
-            return head;
+            printf("%-2d %-20s %-10d %-10s\n", no, head->product.name, head->product.quantity, head->product.category);
+            no++;
         }
         head = head->next;
     }
@@ -153,26 +162,29 @@ void load_data(Node **head, Node **tail)
         printf("Error: Cannot open file %s\n", DATA);
         return;
     }
+
     char line[200];
+    int lineCount = 0;
     while (fgets(line, sizeof(line), fp) != NULL)
     {
-        if (line[strlen(line) - 1] != '\n')
-        {
-            printf("Error: Line too long\n");
-            return;
-        }
-        char *name = NULL, *category = NULL;
-        name = strdup("");
-        category = strdup("");
+        lineCount++;
+
+        char name[MAX];
+        char category[MAX];
         int quantity;
-        sscanf(line, "%[^,],%d,%[^,\n]", name, &quantity, category);
-        Product product = {0};
-        strcpy(product.name, name);
-        strcpy(product.category, category);
-        product.quantity = quantity;
-        insert_tail(head, tail, product);
-        free(name);
-        free(category);
+
+        if (sscanf(line, "%[^,],%d,%[^,\n]", name, &quantity, category) == 3)
+        {
+            Product product = {0};
+            strncpy(product.name, name, sizeof(product.name) - 1);
+            strncpy(product.category, category, sizeof(product.category) - 1);
+            product.quantity = quantity;
+            insert_tail(head, tail, product);
+        }
+        else
+        {
+            printf("Error: Invalid data format at line %d\n", lineCount);
+        }
     }
 
     fclose(fp);
