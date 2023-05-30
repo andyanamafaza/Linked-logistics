@@ -71,15 +71,9 @@ int main()
                 printf("1. Beginning\n");
                 printf("2. End\n");
                 printf("Enter your choice: ");
-                scanf("%d", &place);
-                if (scanf("%d", &place) != 1)
-                {
-                    printf("Invalid input! Please enter a number.\n");
-                    while (getchar() != '\n')
-                    {
-                    }
-                    continue;
-                }
+                char input[1];
+                scanf("%s", input);
+                place = atoi(input);
                 if (place == 1 || place == 2)
                 {
                     valid1 = 1;
@@ -138,15 +132,9 @@ int main()
                 printf("1. Increase\n");
                 printf("2. Decrease\n");
                 printf("Enter your choice: ");
-                scanf("%d", &type);
-                if (scanf("%d", &type) != 1)
-                {
-                    printf("Invalid input! Please enter a number.\n");
-                    while (getchar() != '\n')
-                    {
-                    }
-                    continue;
-                }
+                char input[1];
+                scanf("%s", input);
+                type = atoi(input);
                 if (type == 1 || type == 2)
                 {
                     valid = 1;
@@ -249,15 +237,9 @@ int main()
                 printf("1. Name\n");
                 printf("2. Category\n");
                 printf("Enter your choice: ");
-                scanf("%d", &input);
-                if (scanf("%d", &input) != 1)
-                {
-                    printf("Invalid input! Please enter a number.\n");
-                    while (getchar() != '\n')
-                    {
-                    }
-                    continue;
-                }
+                char input1[1];
+                scanf("%s", input1);
+                input = atoi(input1);
                 if (input == 1 || input == 2)
                 {
                     valid = 1;
@@ -308,15 +290,9 @@ int main()
                 printf("1. Ascending\n");
                 printf("2. Descending\n");
                 printf("Enter your choice: ");
-                scanf("%d", &order);
-                if (scanf("%d", &order) != 1)
-                {
-                    printf("Invalid input! Please enter a number.\n");
-                    while (getchar() != '\n')
-                    {
-                    }
-                    continue;
-                }
+                char input1[1];
+                scanf("%s", input1);
+                order = atoi(input1);
                 if (order == 1 || order == 2)
                 {
                     valid1 = 1;
@@ -333,15 +309,9 @@ int main()
                 printf("2. Category\n");
                 printf("3. Quantity\n");
                 printf("Enter your choice: ");
-                scanf("%d", &type);
-                if (scanf("%d", &type) != 1)
-                {
-                    printf("Invalid input! Please enter a number.\n");
-                    while (getchar() != '\n')
-                    {
-                    }
-                    continue;
-                }
+                char input2[1];
+                scanf("%s", input2);
+                type = atoi(input2);
                 if (type == 1 || type == 2 || type == 3)
                 {
                     valid2 = 1;
